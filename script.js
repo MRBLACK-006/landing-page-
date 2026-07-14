@@ -91,7 +91,7 @@ const tl = gsap.timeline({
   scrollTrigger: {
     trigger: "#animation-section",
     start: "top top",
-    end: "+=2000%", // Decreased scroll distance so the video plays a little bit faster
+    end: "+=3000%", // Increased scroll distance to make the scrolling feel slower and more controlled
     scrub: isMobile ? 0.2 : 0.5, // Buttery smooth easing on both devices
     anticipatePin: 1,
     pin: true,
@@ -111,28 +111,26 @@ tl.to(imageSeq, {
 gsap.set([".scroll-text-1", ".scroll-text-2", ".scroll-text-3"], { y: "120vh" });
 gsap.set(".scroll-logo", { xPercent: -50 }); // GSAP strictly handles horizontal centering
 
-// PERFECT NATIVE SCROLL SYNC:
-// The total scroll distance is 2000vh (duration 1.0).
-// To move an element 120vh at exactly 1:1 native scroll speed, the duration must be 120/2000 = 0.06.
-// Using ease: "none" removes GSAP smoothing and makes it lock perfectly to the scroll wheel.
+// PERFECT NATIVE SCROLL SYNC (Decoupled from video camera pans):
+// Total scroll is 3000vh. 120vh of movement = 120/3000 = 0.04 duration.
 
 // Part 0: Logo gently fades in and floats up
-tl.to(".scroll-logo", { opacity: 1, y: 0, duration: 0.05, ease: "none" }, 0.00)
-  .to(".scroll-logo", { x: "30vw", y: "-38vh", scale: 0.55, duration: 0.10, ease: "none" }, 0.05)
-  .to(".blur-overlay", { opacity: 0, duration: 0.10, ease: "none" }, 0.05);
+tl.to(".scroll-logo", { opacity: 1, y: 0, duration: 0.04, ease: "none" }, 0.00)
+  .to(".scroll-logo", { x: "30vw", y: "-38vh", scale: 0.55, duration: 0.05, ease: "none" }, 0.05)
+  .to(".blur-overlay", { opacity: 0, duration: 0.05, ease: "none" }, 0.05);
 
-// Part 1 enters perfectly synced to native scroll (duration 0.06 = exactly 120vh of scrolling)
-tl.to(".scroll-text-1", { y: 0, duration: 0.06, ease: "none" }, 0.20);
+// Part 1 enters closely after logo shrinks (Interval is much smaller now)
+tl.to(".scroll-text-1", { y: 0, duration: 0.04, ease: "none" }, 0.10);
 
-// Part 2 enters synced to native scroll
-tl.to(".scroll-text-2", { y: 0, duration: 0.06, ease: "none" }, 0.40);
+// Part 2 enters very shortly after Part 1
+tl.to(".scroll-text-2", { y: 0, duration: 0.04, ease: "none" }, 0.18);
 
-// Part 1, Part 2, and Logo all exit at native scroll speed as the camera moves past them
-tl.to([".scroll-text-1", ".scroll-text-2"], { y: "-120vh", duration: 0.06, ease: "none" }, 0.60);
-tl.to(".scroll-logo", { y: "-150vh", duration: 0.075, ease: "none" }, 0.60);
+// Part 1, Part 2, and Logo all exit together
+tl.to([".scroll-text-1", ".scroll-text-2"], { y: "-120vh", duration: 0.04, ease: "none" }, 0.30);
+tl.to(".scroll-logo", { y: "-150vh", duration: 0.05, ease: "none" }, 0.30);
 
-// Part 3 enters at native scroll speed
-tl.to(".scroll-text-3", { y: 0, duration: 0.06, ease: "none" }, 0.75);
+// Part 3 enters closely after the exit
+tl.to(".scroll-text-3", { y: 0, duration: 0.04, ease: "none" }, 0.36);
 
 // Navbar and Scroll Indicator hide/show on scroll
 let lastScrollTop = 0;

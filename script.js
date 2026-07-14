@@ -108,7 +108,7 @@ const tl = gsap.timeline({
     trigger: "#animation-section",
     start: "top top",
     end: isMobile ? "+=2500%" : "+=1800%", // Longer distance on mobile so fast swiping doesn't instantly skip text
-    scrub: isMobile ? 1.5 : 1, // Heavy dampening on mobile to handle fast "hands-free" momentum swiping
+    scrub: isMobile ? 0.5 : 1, // Reduced mobile scrub so it stops quickly when you take your hand off
     anticipatePin: 1,
     pin: true,
   }

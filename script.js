@@ -124,7 +124,9 @@ tl.to(imageSeq, {
 }, 0);
 
 // Initial state: push them down far enough to be completely out of the viewport on all screen sizes
-gsap.set([".scroll-text-1", ".scroll-text-2", ".scroll-text-3"], { y: "120vh" });
+gsap.set([".scroll-text-1", ".scroll-text-2"], { y: "120vh" });
+gsap.set(".scroll-text-3", { y: "120vh", xPercent: -50 });
+gsap.set(".scroll-logo", { xPercent: -50 }); // Preserve horizontal centering
 
 // Part 0: Logo gently fades in and floats up to center
 tl.to(".scroll-logo", { opacity: 1, y: 0, duration: 0.1, ease: "power2.out" }, 0.00)

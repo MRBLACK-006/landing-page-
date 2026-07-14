@@ -92,7 +92,7 @@ const tl = gsap.timeline({
     trigger: "#animation-section",
     start: "top top",
     end: isMobile ? "+=1000%" : "+=1800%", // Longer distance on mobile so fast swiping doesn't instantly skip text
-    scrub: isMobile ? 0.2 : 1, // Just a tiny bit of smoothing on mobile, normal on PC
+    scrub: isMobile ? true : 1, // 'true' means ZERO delay/momentum on mobile. 1 means 1s smoothing on PC.
     anticipatePin: 1,
     pin: true,
   }

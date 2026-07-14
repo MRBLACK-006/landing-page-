@@ -43,6 +43,10 @@ function loadFrame(index) {
     
     img.onload = () => {
       images[index] = img;
+      // If the user scrolled to this frame while it was loading, draw it immediately!
+      if (Math.round(imageSeq.frame) === index) {
+        render();
+      }
       resolve(img);
     };
     img.onerror = reject;
@@ -61,31 +65,11 @@ priorityPromises[0].then(img => {
   context.drawImage(img, 0, 0, canvas.width, canvas.height);
 });
 
-// 3. Load the rest of the frames sequentially in the background
+// 3. Request all remaining frames immediately so the browser can download them at max network speed
 Promise.all(priorityPromises).then(() => {
-  let currentIndex = PRIORITY_FRAMES;
-  
-  function loadNextBatch() {
-    if (currentIndex >= frameCount) return;
-    
-    // Load frames in small batches to yield to main thread
-    const BATCH_SIZE = 5;
-    const batchPromises = [];
-    
-    for (let i = 0; i < BATCH_SIZE && currentIndex < frameCount; i++, currentIndex++) {
-      batchPromises.push(loadFrame(currentIndex));
-    }
-    
-    Promise.all(batchPromises).then(() => {
-      if ('requestIdleCallback' in window) {
-        requestIdleCallback(loadNextBatch);
-      } else {
-        setTimeout(loadNextBatch, 10);
-      }
-    });
+  for (let i = PRIORITY_FRAMES; i < frameCount; i++) {
+    loadFrame(i);
   }
-  
-  loadNextBatch();
 });
 
 let lastDrawnFrame = -1;

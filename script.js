@@ -107,7 +107,7 @@ const tl = gsap.timeline({
   scrollTrigger: {
     trigger: "#animation-section",
     start: "top top",
-    end: "+=2500%", // Balanced middle-ground: Not too fast (like 1200%) and not too slow (like 4000%)
+    end: "+=1800%", // Reduced scroll hold for both PC and Mobile so it doesn't take too long
     scrub: 1, // Standard smooth momentum for both mobile and PC
     anticipatePin: 1,
     pin: true,
@@ -183,14 +183,3 @@ window.addEventListener('scroll', () => {
   lastScrollTop = scrollTop;
 });
 
-// Sync animation for the second section to appear smoothly as pinning ends
-gsap.from("#second-section", {
-  scrollTrigger: {
-    trigger: "#second-section",
-    start: "top 95%",
-    end: "top 40%",
-    scrub: true,
-  },
-  opacity: 0, // Only animate opacity, avoiding y-axis translations that create gaps
-  duration: 1
-});

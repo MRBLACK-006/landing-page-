@@ -1,0 +1,162 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #050505;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+#animation-section {
+  position: relative;
+  width: 100vw;
+  height: 100dvh;
+  background-color: #000;
+  overflow: hidden;
+}
+
+canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;
+  pointer-events: none;
+}
+
+
+
+@keyframes scrollWheel {
+  0% { transform: translate(-50%, 0); opacity: 1; }
+  100% { transform: translate(-50%, 15px); opacity: 0; }
+}
+
+@keyframes pulseText {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* --- Second Section --- */
+#second-section {
+  min-height: 100dvh;
+  background: linear-gradient(180deg, #050505, #1a1a1a);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 20;
+  padding: 20px; /* added padding for mobile screens */
+}
+
+.content-box {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 40px 20px; /* reduced padding for mobile */
+  border-radius: 24px;
+  text-align: center;
+  max-width: 600px;
+  width: 100%; /* Make it responsive */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+.content-box h2 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  margin-top: 0;
+}
+
+.content-box p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #aaa;
+  margin-bottom: 40px;
+}
+
+.cta-button {
+  background: #fff;
+  color: #000;
+  border: none;
+  padding: 15px 40px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+  pointer-events: auto;
+}
+
+.cta-button:hover {
+  transform: scale(1.05);
+  background: #eee;
+}
+
+/* Glowing text animation for orange text */
+@keyframes glowingText {
+  0% { text-shadow: 0 0 5px rgba(234, 92, 20, 0.1), 0 0 10px rgba(234, 92, 20, 0.1); }
+  50% { text-shadow: 0 0 10px rgba(234, 92, 20, 0.8), 0 0 20px rgba(234, 92, 20, 0.6), 0 0 30px rgba(234, 92, 20, 0.4); }
+  100% { text-shadow: 0 0 5px rgba(234, 92, 20, 0.1), 0 0 10px rgba(234, 92, 20, 0.1); }
+}
+
+@media (min-width: 768px) {
+  .glow-text-anim {
+    animation: glowingText 2s infinite ease-in-out;
+  }
+}
+
+@keyframes glowingTextGreen {
+  0% { text-shadow: 0 0 5px rgba(51, 184, 100, 0.1), 0 0 10px rgba(51, 184, 100, 0.1); }
+  50% { text-shadow: 0 0 10px rgba(51, 184, 100, 0.8), 0 0 20px rgba(51, 184, 100, 0.6), 0 0 30px rgba(51, 184, 100, 0.4); }
+  100% { text-shadow: 0 0 5px rgba(51, 184, 100, 0.1), 0 0 10px rgba(51, 184, 100, 0.1); }
+}
+
+@media (min-width: 768px) {
+  .glow-text-anim-green {
+    animation: glowingTextGreen 2s infinite ease-in-out;
+  }
+}
+
+/* Navbar Hover Animation */
+.nav-link-anim {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 16px;
+  color: #33B864;
+  font-weight: 500;
+  font-size: 15px;
+  transition: color 0.3s ease;
+  z-index: 1;
+}
+
+.nav-link-anim::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 2px solid #ea5c14;
+  border-radius: 50px; /* Pill shape (circled) */
+  transform: scaleX(0.3); /* Start small from the center */
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Smooth bouncy effect */
+  z-index: -1;
+}
+
+.nav-link-anim:hover::before {
+  transform: scaleX(1); /* Expand to both sides covering the text */
+  opacity: 1;
+}
+
+.nav-link-anim:hover {
+  color: #ea5c14; /* Turn into orange */
+}

@@ -107,9 +107,9 @@ const tl = gsap.timeline({
   scrollTrigger: {
     trigger: "#animation-section",
     start: "top top",
-    end: isMobile ? "+=3000%" : "+=1000%", // Much longer scroll distance on mobile to fix sensitivity
-    scrub: isMobile ? 1.5 : 0.5, // Higher scrub value to smooth out frame lag on fast swipes
-    anticipatePin: 1, // Helps with lag when the section first pins
+    end: "+=800%", 
+    scrub: isMobile ? 0.5 : 0.2,
+    anticipatePin: 1,
     pin: true,
   }
 });

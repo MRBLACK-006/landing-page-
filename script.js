@@ -91,7 +91,7 @@ const tl = gsap.timeline({
   scrollTrigger: {
     trigger: "#animation-section",
     start: "top top",
-    end: "+=3000%", // Increased scroll distance to make the scrolling feel slower and more controlled
+    end: "+=1800%", // Balanced scroll distance: long enough to be smooth, short enough to prevent huge empty gaps
     scrub: isMobile ? 0.2 : 0.5, // Buttery smooth easing on both devices
     anticipatePin: 1,
     pin: true,
@@ -111,26 +111,27 @@ tl.to(imageSeq, {
 gsap.set([".scroll-text-1", ".scroll-text-2", ".scroll-text-3"], { y: "120vh" });
 gsap.set(".scroll-logo", { xPercent: -50 }); // GSAP strictly handles horizontal centering
 
-// PERFECT NATIVE SCROLL SYNC (Decoupled from video camera pans):
-// Total scroll is 3000vh. 120vh of movement = 120/3000 = 0.04 duration.
+// BALANCED TIMELINE:
+// Text is distributed evenly across the video so there are no massive gaps between texts,
+// and no massive empty scroll at the end of the video.
 
 // Part 0: Logo gently fades in and floats up
-tl.to(".scroll-logo", { opacity: 1, y: 0, duration: 0.04, ease: "none" }, 0.00)
-  .to(".scroll-logo", { x: "30vw", y: "-38vh", scale: 0.55, duration: 0.05, ease: "none" }, 0.05)
-  .to(".blur-overlay", { opacity: 0, duration: 0.05, ease: "none" }, 0.05);
+tl.to(".scroll-logo", { opacity: 1, y: 0, duration: 0.05, ease: "power2.out" }, 0.00)
+  .to(".scroll-logo", { x: "30vw", y: "-38vh", scale: 0.55, duration: 0.10, ease: "power2.inOut" }, 0.05)
+  .to(".blur-overlay", { opacity: 0, duration: 0.10, ease: "none" }, 0.05);
 
-// Part 1 enters closely after logo shrinks (Interval is much smaller now)
-tl.to(".scroll-text-1", { y: 0, duration: 0.04, ease: "none" }, 0.10);
+// Part 1 enters smoothly
+tl.to(".scroll-text-1", { y: 0, duration: 0.1, ease: "power2.out" }, 0.15);
 
-// Part 2 enters very shortly after Part 1
-tl.to(".scroll-text-2", { y: 0, duration: 0.04, ease: "none" }, 0.18);
+// Part 2 enters smoothly
+tl.to(".scroll-text-2", { y: 0, duration: 0.1, ease: "power2.out" }, 0.35);
 
-// Part 1, Part 2, and Logo all exit together
-tl.to([".scroll-text-1", ".scroll-text-2"], { y: "-120vh", duration: 0.04, ease: "none" }, 0.30);
-tl.to(".scroll-logo", { y: "-150vh", duration: 0.05, ease: "none" }, 0.30);
+// Part 1, Part 2, and Logo all exit smoothly together
+tl.to([".scroll-text-1", ".scroll-text-2"], { y: "-120vh", duration: 0.1, ease: "power2.in" }, 0.60);
+tl.to(".scroll-logo", { y: "-150vh", duration: 0.1, ease: "power2.in" }, 0.60);
 
-// Part 3 enters closely after the exit
-tl.to(".scroll-text-3", { y: 0, duration: 0.04, ease: "none" }, 0.36);
+// Part 3 enters and sits until the video ends, meaning the next section appears shortly after!
+tl.to(".scroll-text-3", { y: 0, duration: 0.1, ease: "power2.out" }, 0.80);
 
 // Navbar and Scroll Indicator hide/show on scroll
 let lastScrollTop = 0;

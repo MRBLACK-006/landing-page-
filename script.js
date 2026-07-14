@@ -107,8 +107,8 @@ const tl = gsap.timeline({
   scrollTrigger: {
     trigger: "#animation-section",
     start: "top top",
-    end: isMobile ? "+=1200%" : "+=1800%", // Much shorter scroll distance for mobile swiping
-    scrub: 1, // Standard smooth momentum
+    end: isMobile ? "+=2500%" : "+=1800%", // Longer distance on mobile so fast swiping doesn't instantly skip text
+    scrub: isMobile ? 1.5 : 1, // Heavy dampening on mobile to handle fast "hands-free" momentum swiping
     anticipatePin: 1,
     pin: true,
   }
@@ -132,24 +132,21 @@ tl.to(".scroll-logo", { opacity: 1, y: 0, duration: 0.1, ease: "power2.out" }, 0
   .to(".scroll-logo", { x: "30vw", y: "-38vh", scale: 0.55, duration: 0.15, ease: "power2.inOut" }, 0.10)
   .to(".blur-overlay", { opacity: 0, duration: 0.15, ease: "power2.inOut" }, 0.10);
 
-// Part 1
-tl.to(".scroll-text-1", { y: 0, duration: 0.1, ease: "power2.out" }, 0.15);
+// Part 1 enters
+tl.to(".scroll-text-1", { y: 0, duration: 0.1, ease: "power2.out" }, 0.10);
 
-// Part 2 (Appears slightly later on mobile to give more breathing room)
-tl.to(".scroll-text-2", { y: 0, duration: 0.1, ease: "power2.out" }, isMobile ? 0.40 : 0.30);
+// Part 1 exits completely before Part 2
+tl.to(".scroll-text-1", { y: -window.innerHeight, duration: 0.1, ease: "power2.in" }, 0.30);
 
-// Exit Part 1 and Part 2 upwards before Part 3 enters
-tl.to([".scroll-text-1", ".scroll-text-2"], {
-  y: -window.innerHeight,
-  duration: 0.1,
-  ease: "power2.in"
-}, 0.70);
+// Part 2 enters
+tl.to(".scroll-text-2", { y: 0, duration: 0.1, ease: "power2.out" }, 0.45);
 
-// Logo exits upwards exactly in sync with Part 1 and Part 2
+// Part 2 and Logo exit together
+tl.to(".scroll-text-2", { y: -window.innerHeight, duration: 0.1, ease: "power2.in" }, 0.70);
 tl.to(".scroll-logo", { y: "-150vh", duration: 0.1, ease: "power2.in" }, 0.70);
 
-// Part 3
-tl.to(".scroll-text-3", { y: 0, duration: 0.1, ease: "power2.out" }, 0.90);
+// Part 3 enters
+tl.to(".scroll-text-3", { y: 0, duration: 0.1, ease: "power2.out" }, 0.85);
 
 // Navbar and Scroll Indicator hide/show on scroll
 let lastScrollTop = 0;

@@ -123,11 +123,11 @@ tl.to(".scroll-text-1", { y: 0, duration: 0.1, ease: "power2.out" }, 0.25);
 tl.to(".scroll-text-2", { y: 0, duration: 0.1, ease: "power2.out" }, 0.45);
 
 // Part 1, Part 2, and Logo all stay on screen together, then exit smoothly before Part 3
-tl.to([".scroll-text-1", ".scroll-text-2"], { y: -window.innerHeight, duration: 0.1, ease: "power2.in" }, 0.70);
-tl.to(".scroll-logo", { y: "-150vh", duration: 0.1, ease: "power2.in" }, 0.70);
+tl.to([".scroll-text-1", ".scroll-text-2"], { y: -window.innerHeight, duration: 0.1, ease: "power2.in" }, 0.60);
+tl.to(".scroll-logo", { y: "-150vh", duration: 0.1, ease: "power2.in" }, 0.60);
 
-// Part 3 enters
-tl.to(".scroll-text-3", { y: 0, duration: 0.1, ease: "power2.out" }, 0.85);
+// Part 3 enters earlier so it stays on screen for a long time before the second section appears
+tl.to(".scroll-text-3", { y: 0, duration: 0.1, ease: "power2.out" }, 0.70);
 
 // Navbar and Scroll Indicator hide/show on scroll
 let lastScrollTop = 0;

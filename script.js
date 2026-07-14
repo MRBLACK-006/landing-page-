@@ -86,30 +86,26 @@ function render() {
   }
 }
 
-// Forcefully hijack native mobile scroll momentum so it stops quickly when you let go
-if (isMobile) {
-  ScrollTrigger.normalizeScroll(true);
-}
-
 // Master timeline with ScrollTrigger pinning
 const tl = gsap.timeline({
   scrollTrigger: {
     trigger: "#animation-section",
     start: "top top",
-    end: isMobile ? "+=3200%" : "+=3000%", // Decreased mobile distance slightly to increase sensitivity
-    scrub: isMobile ? 0.05 : 0.2, // Extremely minimal smoothing on mobile (50ms) to prevent sliding, normal smooth on PC
+    end: "+=2500%", // Consistent, manageable scroll distance for both devices
+    scrub: isMobile ? 0.2 : 0.5, // Buttery smooth easing on both devices
     anticipatePin: 1,
     pin: true,
   }
 });
 
-// Animate the frames over the entire timeline duration
+// CRITICAL FIX: Force the video image sequence to span EXACTLY the full timeline duration (1.0)
+// Before, this had no duration, so it defaulted to 0.5, causing the video to finish playing halfway through the scroll!
 tl.to(imageSeq, {
   frame: frameCount - 1,
   snap: "frame",
   ease: "none",
-  onUpdate: render,
-  duration: 1 // Baseline duration for the timeline
+  duration: 1, 
+  onUpdate: render
 }, 0);
 
 // Initial state: push them down far enough to be completely out of the viewport on all screen sizes
@@ -117,22 +113,22 @@ gsap.set([".scroll-text-1", ".scroll-text-2", ".scroll-text-3"], { y: "120vh" })
 gsap.set(".scroll-logo", { xPercent: -50 }); // GSAP strictly handles horizontal centering
 
 // Part 0: Logo gently fades in and floats up to center
-tl.to(".scroll-logo", { opacity: 1, y: 0, duration: 0.1, ease: "power2.out" }, 0.00)
-  .to(".scroll-logo", { x: "30vw", y: "-38vh", scale: 0.55, duration: 0.15, ease: "power2.inOut" }, 0.10)
-  .to(".blur-overlay", { opacity: 0, duration: 0.15, ease: "power2.inOut" }, 0.10);
+tl.to(".scroll-logo", { opacity: 1, y: 0, duration: 0.05, ease: "power2.out" }, 0.00)
+  .to(".scroll-logo", { x: "30vw", y: "-38vh", scale: 0.55, duration: 0.10, ease: "power2.inOut" }, 0.05)
+  .to(".blur-overlay", { opacity: 0, duration: 0.10, ease: "power2.inOut" }, 0.05);
 
-// Part 1 enters strictly AFTER the logo has shrunk and moved away (0.25)
-tl.to(".scroll-text-1", { y: 0, duration: 0.1, ease: "power2.out" }, 0.25);
+// Part 1 enters perfectly synced to the video at 20%
+tl.to(".scroll-text-1", { y: 0, duration: 0.05, ease: "power2.out" }, 0.20);
 
-// Part 2 enters normally (0.45)
-tl.to(".scroll-text-2", { y: 0, duration: 0.1, ease: "power2.out" }, 0.45);
+// Part 2 enters synced to the video at 40%
+tl.to(".scroll-text-2", { y: 0, duration: 0.05, ease: "power2.out" }, 0.40);
 
-// Part 1, Part 2, and Logo all stay on screen together, then exit smoothly before Part 3
+// Part 1, Part 2, and Logo all exit smoothly as the camera moves past them (60%)
 tl.to([".scroll-text-1", ".scroll-text-2"], { y: -window.innerHeight, duration: 0.1, ease: "power2.in" }, 0.60);
 tl.to(".scroll-logo", { y: "-150vh", duration: 0.1, ease: "power2.in" }, 0.60);
 
-// Part 3 enters earlier so it stays on screen for a long time before the second section appears
-tl.to(".scroll-text-3", { y: 0, duration: 0.1, ease: "power2.out" }, 0.70);
+// Part 3 enters at 75% and stays on screen while the video plays until the very end (100%)
+tl.to(".scroll-text-3", { y: 0, duration: 0.1, ease: "power2.out" }, 0.75);
 
 // Navbar and Scroll Indicator hide/show on scroll
 let lastScrollTop = 0;

@@ -126,23 +126,29 @@ gsap.set(".scroll-logo", { xPercent: -50 }); // GSAP strictly handles horizontal
 // Text is distributed evenly across the video so there are no massive gaps between texts,
 // and no massive empty scroll at the end of the video.
 
+// Dynamically shorten intervals strictly on mobile without touching PC
+const tP1 = isMobile ? 0.12 : 0.15;
+const tP2 = isMobile ? 0.28 : 0.35;
+const tExit = isMobile ? 0.55 : 0.60;
+const tP3 = isMobile ? 0.72 : 0.80;
+
 // Part 0: Logo gently fades in and floats up
 tl.to(".scroll-logo", { opacity: 1, y: 0, duration: 0.05, ease: "power2.out" }, 0.00)
   .to(".scroll-logo", { x: "30vw", y: "-38vh", scale: 0.55, duration: 0.10, ease: "power2.inOut" }, 0.05)
   .to(".blur-overlay", { opacity: 0, duration: 0.10, ease: "none" }, 0.05);
 
 // Part 1 enters smoothly
-tl.to(".scroll-text-1", { y: 0, duration: 0.1, ease: "power2.out" }, 0.15);
+tl.to(".scroll-text-1", { y: 0, duration: 0.1, ease: "power2.out" }, tP1);
 
 // Part 2 enters smoothly
-tl.to(".scroll-text-2", { y: 0, duration: 0.1, ease: "power2.out" }, 0.35);
+tl.to(".scroll-text-2", { y: 0, duration: 0.1, ease: "power2.out" }, tP2);
 
 // Part 1, Part 2, and Logo all exit smoothly together
-tl.to([".scroll-text-1", ".scroll-text-2"], { y: "-120vh", duration: 0.1, ease: "power2.in" }, 0.60);
-tl.to(".scroll-logo", { y: "-150vh", duration: 0.1, ease: "power2.in" }, 0.60);
+tl.to([".scroll-text-1", ".scroll-text-2"], { y: "-120vh", duration: 0.1, ease: "power2.in" }, tExit);
+tl.to(".scroll-logo", { y: "-150vh", duration: 0.1, ease: "power2.in" }, tExit);
 
 // Part 3 enters and sits until the video ends, meaning the next section appears shortly after!
-tl.to(".scroll-text-3", { y: 0, duration: 0.1, ease: "power2.out" }, 0.80);
+tl.to(".scroll-text-3", { y: 0, duration: 0.1, ease: "power2.out" }, tP3);
 
 // Navbar and Scroll Indicator hide/show on scroll
 let lastScrollTop = 0;

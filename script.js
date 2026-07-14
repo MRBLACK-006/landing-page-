@@ -118,9 +118,10 @@ tl.to(imageSeq, {
   onUpdate: render
 }, 0);
 
-// Initial state: push them down exactly 120vh
+// Initial state: push them down exactly 120vh, prepare the scrollbar
 gsap.set([".scroll-text-1", ".scroll-text-2", ".scroll-text-3"], { y: "120vh" });
 gsap.set(".scroll-logo", { xPercent: -50 }); // GSAP strictly handles horizontal centering
+gsap.set("#progress-bar", { scaleY: 0 }); // Explicitly set initial state to prevent CSS conflicts
 
 // BALANCED TIMELINE:
 // Text is distributed evenly across the video so there are no massive gaps between texts,
@@ -135,7 +136,8 @@ const tP3 = isMobile ? 0.72 : 0.80;
 // Part 0: Logo gently fades in and floats up
 tl.to(".scroll-logo", { opacity: 1, y: 0, duration: 0.05, ease: "power2.out" }, 0.00)
   .to(".scroll-logo", { x: "30vw", y: "-38vh", scale: 0.55, duration: 0.10, ease: "power2.inOut" }, 0.05)
-  .to(".blur-overlay", { opacity: 0, duration: 0.10, ease: "none" }, 0.05);
+  .to(".blur-overlay", { opacity: 0, duration: 0.10, ease: "none" }, 0.05)
+  .to("#progress-container", { opacity: 1, duration: 0.05, ease: "none" }, 0.00); // Fade in scrollbar container
 
 // Part 1 enters smoothly
 tl.to(".scroll-text-1", { y: 0, duration: 0.1, ease: "power2.out" }, tP1);
@@ -150,25 +152,25 @@ tl.to(".scroll-logo", { y: "-150vh", duration: 0.1, ease: "power2.in" }, tExit);
 // Part 3 enters and sits until the video ends, meaning the next section appears shortly after!
 tl.to(".scroll-text-3", { y: 0, duration: 0.1, ease: "power2.out" }, tP3);
 
-// Orange Progress Bar Animation
+// Floating Custom Scroll Bar Animation
 gsap.to("#progress-bar", {
-  scaleX: 1,
+  scaleY: 1,
   ease: "none",
   scrollTrigger: {
     trigger: "#animation-section",
     start: "top top",
-    end: isMobile ? "+=2000%" : "+=3500%", // Match the master timeline
+    end: isMobile ? "+=2000%" : "+=3500%", // Match the master timeline exactly
     scrub: 0.1 // Fast responsive scrub for the progress bar
   }
 });
 
-// Fade out the progress bar when reaching the second section
-gsap.to("#progress-bar", {
+// Fade out the entire scrollbar container when reaching the second section
+gsap.to("#progress-container", {
   scrollTrigger: {
     trigger: "#second-section",
-    start: "top bottom", // When second section enters the bottom of the screen
-    onEnter: () => gsap.to("#progress-bar", { opacity: 0, duration: 0.3 }),
-    onLeaveBack: () => gsap.to("#progress-bar", { opacity: 1, duration: 0.3 })
+    start: "top bottom", 
+    onEnter: () => gsap.to("#progress-container", { opacity: 0, duration: 0.3 }),
+    onLeaveBack: () => gsap.to("#progress-container", { opacity: 1, duration: 0.3 })
   }
 });
 

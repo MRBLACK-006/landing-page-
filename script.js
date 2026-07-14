@@ -130,21 +130,17 @@ gsap.set(".scroll-logo", { xPercent: -50 }); // Preserve horizontal centering
 
 // Part 0: Logo gently fades in and floats up to center
 tl.to(".scroll-logo", { opacity: 1, y: 0, duration: 0.1, ease: "power2.out" }, 0.00)
-  // Then it shrinks and moves to the right side and higher up, and we fade out the blur overlay
   .to(".scroll-logo", { x: "30vw", y: "-38vh", scale: 0.55, duration: 0.15, ease: "power2.inOut" }, 0.10)
   .to(".blur-overlay", { opacity: 0, duration: 0.15, ease: "power2.inOut" }, 0.10);
 
-// Part 1 enters
-tl.to(".scroll-text-1", { y: 0, duration: 0.1, ease: "power2.out" }, 0.10);
+// Part 1 enters strictly AFTER the logo has shrunk and moved away (0.25)
+tl.to(".scroll-text-1", { y: 0, duration: 0.1, ease: "power2.out" }, 0.25);
 
-// Part 1 exits completely before Part 2
-tl.to(".scroll-text-1", { y: -window.innerHeight, duration: 0.1, ease: "power2.in" }, 0.30);
-
-// Part 2 enters
+// Part 2 enters normally (0.45)
 tl.to(".scroll-text-2", { y: 0, duration: 0.1, ease: "power2.out" }, 0.45);
 
-// Part 2 and Logo exit together
-tl.to(".scroll-text-2", { y: -window.innerHeight, duration: 0.1, ease: "power2.in" }, 0.70);
+// Part 1, Part 2, and Logo all stay on screen together, then exit smoothly before Part 3
+tl.to([".scroll-text-1", ".scroll-text-2"], { y: -window.innerHeight, duration: 0.1, ease: "power2.in" }, 0.70);
 tl.to(".scroll-logo", { y: "-150vh", duration: 0.1, ease: "power2.in" }, 0.70);
 
 // Part 3 enters

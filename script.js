@@ -1,5 +1,9 @@
 gsap.registerPlugin(ScrollTrigger);
 
+// CRITICAL MOBILE FIX: Prevent the entire timeline from jumping and recalculating 
+// violently when the mobile browser's URL bar hides or shows during scrolling.
+ScrollTrigger.config({ ignoreMobileResize: true });
+
 const canvas = document.getElementById("hero-lightpass");
 const context = canvas.getContext("2d", { alpha: false }); // alpha: false heavily optimizes performance
 
@@ -91,10 +95,12 @@ const tl = gsap.timeline({
   scrollTrigger: {
     trigger: "#animation-section",
     start: "top top",
-    end: "+=3500%", // Drastically increased scroll distance to make the video frames play much slower
+    end: isMobile ? "+=2000%" : "+=3500%", // Drastically reduced on mobile to prevent thumb fatigue, kept slow on PC
     scrub: isMobile ? 0.2 : 0.5, // Buttery smooth easing on both devices
     anticipatePin: 1,
     pin: true,
+    fastScrollEnd: isMobile ? true : false, // Optimizes mobile if you swipe extremely fast
+    preventOverlaps: true, // Prevents glitching on mobile scroll reversal
   }
 });
 

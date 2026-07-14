@@ -91,8 +91,8 @@ const tl = gsap.timeline({
   scrollTrigger: {
     trigger: "#animation-section",
     start: "top top",
-    end: isMobile ? "+=3000%" : "+=2200%", // Increased scroll distance to slow down the animation pacing
-    scrub: true, // Absolutely zero GSAP delay, stops instantly when the scrollbar stops
+    end: isMobile ? "+=4000%" : "+=3000%", // Much longer scroll distance to make the animation progress slower
+    scrub: 0.2, // A very quick 0.2s smoothing: keeps it buttery smooth but stops almost instantly when you let go
     anticipatePin: 1,
     pin: true,
   }

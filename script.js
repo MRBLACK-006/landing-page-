@@ -136,20 +136,20 @@ tl.to(".scroll-logo", { opacity: 1, y: 0, duration: 0.1, ease: "power2.out" }, 0
 tl.to(".scroll-text-1", { y: 0, duration: 0.1, ease: "power2.out" }, 0.15);
 
 // Part 2 (Appears slightly later on mobile to give more breathing room)
-tl.to(".scroll-text-2", { y: 0, duration: 0.1, ease: "power2.out" }, isMobile ? 0.35 : 0.25);
+tl.to(".scroll-text-2", { y: 0, duration: 0.1, ease: "power2.out" }, isMobile ? 0.40 : 0.30);
 
 // Exit Part 1 and Part 2 upwards before Part 3 enters
 tl.to([".scroll-text-1", ".scroll-text-2"], {
   y: -window.innerHeight,
   duration: 0.1,
   ease: "power2.in"
-}, 0.55);
+}, 0.70);
 
 // Logo exits upwards exactly in sync with Part 1 and Part 2
-tl.to(".scroll-logo", { y: "-150vh", duration: 0.1, ease: "power2.in" }, 0.55);
+tl.to(".scroll-logo", { y: "-150vh", duration: 0.1, ease: "power2.in" }, 0.70);
 
 // Part 3
-tl.to(".scroll-text-3", { y: 0, duration: 0.1, ease: "power2.out" }, 0.75);
+tl.to(".scroll-text-3", { y: 0, duration: 0.1, ease: "power2.out" }, 0.90);
 
 // Navbar and Scroll Indicator hide/show on scroll
 let lastScrollTop = 0;

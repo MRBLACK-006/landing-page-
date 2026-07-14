@@ -91,7 +91,7 @@ const tl = gsap.timeline({
   scrollTrigger: {
     trigger: "#animation-section",
     start: "top top",
-    end: "+=1800%", // Balanced scroll distance: long enough to be smooth, short enough to prevent huge empty gaps
+    end: "+=3500%", // Drastically increased scroll distance to make the video frames play much slower
     scrub: isMobile ? 0.2 : 0.5, // Buttery smooth easing on both devices
     anticipatePin: 1,
     pin: true,

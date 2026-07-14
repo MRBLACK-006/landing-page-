@@ -9,6 +9,11 @@ const context = canvas.getContext("2d", { alpha: false }); // alpha: false heavi
 
 const isMobile = window.innerWidth <= 768;
 
+// Forcefully intercept mobile touch events to kill the endless native browser coasting
+if (isMobile) {
+  ScrollTrigger.normalizeScroll(true);
+}
+
 // Adjust canvas resolution for portrait vs landscape
 canvas.width = isMobile ? 720 : 1280;
 canvas.height = isMobile ? 1280 : 720;
@@ -96,7 +101,7 @@ const tl = gsap.timeline({
     trigger: "#animation-section",
     start: "top top",
     end: isMobile ? "+=2000%" : "+=3500%", // Drastically reduced on mobile to prevent thumb fatigue, kept slow on PC
-    scrub: isMobile ? 0.2 : 0.5, // Buttery smooth easing on both devices
+    scrub: isMobile ? 1 : 0.5, // Exactly 1-second glide on mobile after finger releases
     anticipatePin: 1,
     pin: true,
     fastScrollEnd: isMobile ? true : false, // Optimizes mobile if you swipe extremely fast

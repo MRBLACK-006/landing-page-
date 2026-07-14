@@ -187,11 +187,10 @@ window.addEventListener('scroll', () => {
 gsap.from("#second-section", {
   scrollTrigger: {
     trigger: "#second-section",
-    start: "top 90%",
-    end: "top 30%",
+    start: "top 95%",
+    end: "top 40%",
     scrub: true,
   },
-  y: 150,
-  opacity: 0,
+  opacity: 0, // Only animate opacity, avoiding y-axis translations that create gaps
   duration: 1
 });

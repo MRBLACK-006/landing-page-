@@ -107,8 +107,8 @@ const tl = gsap.timeline({
   scrollTrigger: {
     trigger: "#animation-section",
     start: "top top",
-    end: "+=800%", 
-    scrub: isMobile ? 0.5 : 0.2,
+    end: isMobile ? "+=2500%" : "+=4000%", // Drastically increased scroll distance on PC 
+    scrub: isMobile ? 0.3 : 1.5, // High scrub on PC to dampen fast mouse wheel flicks, low on mobile
     anticipatePin: 1,
     pin: true,
   }

@@ -51,12 +51,9 @@ canvas {
 #second-section {
   min-height: 100dvh;
   background: linear-gradient(180deg, #050505, #1a1a1a);
-  display: flex;
-  justify-content: center;
-  align-items: center;
   position: relative;
   z-index: 20;
-  padding: 20px; /* added padding for mobile screens */
+  padding: 80px 20px; /* Safe padding that allows natural scrolling without cutting off the top */
 }
 
 .content-box {

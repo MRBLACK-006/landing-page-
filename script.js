@@ -91,8 +91,8 @@ const tl = gsap.timeline({
   scrollTrigger: {
     trigger: "#animation-section",
     start: "top top",
-    end: isMobile ? "+=1000%" : "+=1800%", // Longer distance on mobile so fast swiping doesn't instantly skip text
-    scrub: isMobile ? true : 1, // 'true' means ZERO delay/momentum on mobile. 1 means 1s smoothing on PC.
+    end: isMobile ? "+=2500%" : "+=1800%", // Longer distance on mobile so fast swiping doesn't instantly skip text
+    scrub: true, // Absolutely zero GSAP delay, stops instantly when the scrollbar stops
     anticipatePin: 1,
     pin: true,
   }

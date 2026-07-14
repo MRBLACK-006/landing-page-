@@ -107,8 +107,8 @@ const tl = gsap.timeline({
   scrollTrigger: {
     trigger: "#animation-section",
     start: "top top",
-    end: isMobile ? "+=2500%" : "+=4000%", // Drastically increased scroll distance on PC 
-    scrub: isMobile ? 0.3 : 0.1, // Near zero scrub to instantly stop playing when you stop scrolling
+    end: isMobile ? "+=1000%" : "+=1500%", // Reduced scroll hold for both PC and Mobile
+    scrub: isMobile ? 1 : 0.1, // Smooth on mobile, instant stop on PC
     anticipatePin: 1,
     pin: true,
   }
@@ -181,4 +181,17 @@ window.addEventListener('scroll', () => {
   }
 
   lastScrollTop = scrollTop;
+});
+
+// Sync animation for the second section to appear smoothly as pinning ends
+gsap.from("#second-section", {
+  scrollTrigger: {
+    trigger: "#second-section",
+    start: "top 90%",
+    end: "top 30%",
+    scrub: true,
+  },
+  y: 150,
+  opacity: 0,
+  duration: 1
 });

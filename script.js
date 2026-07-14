@@ -150,6 +150,28 @@ tl.to(".scroll-logo", { y: "-150vh", duration: 0.1, ease: "power2.in" }, tExit);
 // Part 3 enters and sits until the video ends, meaning the next section appears shortly after!
 tl.to(".scroll-text-3", { y: 0, duration: 0.1, ease: "power2.out" }, tP3);
 
+// Orange Progress Bar Animation
+gsap.to("#progress-bar", {
+  scaleX: 1,
+  ease: "none",
+  scrollTrigger: {
+    trigger: "#animation-section",
+    start: "top top",
+    end: isMobile ? "+=2000%" : "+=3500%", // Match the master timeline
+    scrub: 0.1 // Fast responsive scrub for the progress bar
+  }
+});
+
+// Fade out the progress bar when reaching the second section
+gsap.to("#progress-bar", {
+  scrollTrigger: {
+    trigger: "#second-section",
+    start: "top bottom", // When second section enters the bottom of the screen
+    onEnter: () => gsap.to("#progress-bar", { opacity: 0, duration: 0.3 }),
+    onLeaveBack: () => gsap.to("#progress-bar", { opacity: 1, duration: 0.3 })
+  }
+});
+
 // Navbar and Scroll Indicator hide/show on scroll
 let lastScrollTop = 0;
 const navbar = document.getElementById('navbar');

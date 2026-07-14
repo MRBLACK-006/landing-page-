@@ -107,8 +107,8 @@ const tl = gsap.timeline({
   scrollTrigger: {
     trigger: "#animation-section",
     start: "top top",
-    end: "+=1200%", // "Normal" scroll duration
-    scrub: 1.5, // High scrub to dampen and slow down hands-free/momentum scrolling
+    end: "+=2500%", // Balanced middle-ground: Not too fast (like 1200%) and not too slow (like 4000%)
+    scrub: 1, // Standard smooth momentum for both mobile and PC
     anticipatePin: 1,
     pin: true,
   }

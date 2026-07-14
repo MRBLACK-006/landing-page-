@@ -86,16 +86,13 @@ function render() {
   }
 }
 
-// Completely hijack and normalize native mobile scrolling to prevent "momentum sliding"
-ScrollTrigger.normalizeScroll(true);
-
 // Master timeline with ScrollTrigger pinning
 const tl = gsap.timeline({
   scrollTrigger: {
     trigger: "#animation-section",
     start: "top top",
     end: isMobile ? "+=2500%" : "+=1800%", // Longer distance on mobile so fast swiping doesn't instantly skip text
-    scrub: true, // Exact 1:1 scrubbing with no artificial delay
+    scrub: isMobile ? 0.2 : 1, // Just a tiny bit of smoothing on mobile, normal on PC
     anticipatePin: 1,
     pin: true,
   }

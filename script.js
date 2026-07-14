@@ -91,7 +91,7 @@ const tl = gsap.timeline({
   scrollTrigger: {
     trigger: "#animation-section",
     start: "top top",
-    end: "+=1500%", // Reduced scroll distance so you don't have to swipe as much
+    end: isMobile ? "+=1500%" : "+=1800%", // Reduced from 2500% so mobile scrolling is faster and requires less swiping
     scrub: isMobile ? 0.2 : 1, // Just a tiny bit of smoothing on mobile, normal on PC
     anticipatePin: 1,
     pin: true,

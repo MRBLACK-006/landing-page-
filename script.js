@@ -86,6 +86,11 @@ function render() {
   }
 }
 
+// Forcefully hijack native mobile scroll momentum so it stops quickly when you let go
+if (isMobile) {
+  ScrollTrigger.normalizeScroll(true);
+}
+
 // Master timeline with ScrollTrigger pinning
 const tl = gsap.timeline({
   scrollTrigger: {
